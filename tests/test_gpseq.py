@@ -46,3 +46,20 @@ def test_gpseq_large_random_input():
     selected_projects = gpseq(instance)
     assert isinstance(selected_projects, list)
     assert all(0 <= i < m for i in selected_projects)
+
+
+def test_gpseq_invalid_input_length():
+    approvals = [[0], [1]]
+    costs = [1.0]
+    budget = 5.0
+    with pytest.raises(Exception):
+        instance = create_instance_from_approvals_and_costs(approvals, costs, budget)
+        gpseq(instance)
+
+def test_gpseq_negative_budget():
+    approvals = [[0]]
+    costs = [1.0]
+    budget = -5.0
+    with pytest.raises(Exception):
+        instance = create_instance_from_approvals_and_costs(approvals, costs, budget)
+        gpseq(instance)
